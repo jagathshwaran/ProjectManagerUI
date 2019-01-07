@@ -1,0 +1,161 @@
+<div class="container">
+  <form [formGroup]="ProjectForm" novalidate>
+  <div class="row p-1">
+    <div class="col-sm-6 text-right">
+        <div class="input-group">
+            <div class="input-group-prepend">
+                <input type="hidden" id="" formControlName="Project_ID" value="">
+              <span class="input-group-text" id="">Project Name</span>
+            </div>
+            <input type="text" formControlName="ProjectName" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.ProjectName.errors }"
+            required id="ProjectName" maxlength="50" name="ProjectName" placeholder="Project Name">
+          </div>
+    </div>
+    <div class="col-sm-6 text-right">
+        <div class="input-group mb-3">
+            <div class="input-group-prepend">
+                <span class="input-group-text">
+                    <input type="checkbox" formControlName="setStartAndEndDate"  (change)="changeDate($event)" aria-label="Checkbox for following text input">
+                </span>
+            </div>
+            <input type="Date" formControlName="StartDate" [ngClass]="{ 'is-invalid': submitted && f.StartDate.errors}"   class="form-control">
+            <input type="Date"  formControlName="EndDate" [ngClass]="{ 'is-invalid': submitted && f.EndDate.errors}"  class="form-control">
+          </div>
+    </div>
+  </div>
+
+  <div class="row p-1">
+      <div class="col-sm-6 text-right">
+          <div class="input-group">
+              <div class="input-group-prepend">
+                <span class="input-group-text" id="">Priority : {{priority}}</span>
+              </div>
+              <input type="range" id="Priority" formControlName="Priority" name="Priority" (change)="onPriorityChange($event)" max="30" value="1"min="0" class="form-control" >
+            </div>
+      </div>
+      <div class="col-sm-6 text-left">
+          <div class="input-group mb-3">
+              <input type="text" class="form-control" placeholder="Manager Name" aria-label="Manager Name" aria-describedby="basic-addon2" readonly formControlName="manager" required name="manager" [ngClass]="{ 'is-invalid': submitted && f.manager.errors }"
+              id="manager">
+              <div class="input-group-append">
+                <button class="btn btn-outline-secondary" type="button" data-toggle="modal" data-target="#myModal">Search</button>
+              </div>
+            </div>
+            </div>
+            <input type="hidden" id="User_ID" name="User_ID" formControlName="User_ID">
+    </div>
+
+  <div class="row p-1" style="border-bottom:2px dashed #999">
+      <div class="col-sm-11 text-right">
+            <button class="btn-sm btn-primary" data-target="#projectgrid"   (click)="SaveProject()" type="button">{{buttonTitle}}</button>
+      </div>
+      <div class="col-sm-1 text-right">
+          <button class="btn-sm btn-primary" (click)="resetForm()" type="button">Reset</button>
+    </div>
+  </div>
+</form>
+
+  <div class="row" style="padding:10px; background-color: #cccccc;border-bottom: 2px dashed #999999;">
+      <div class="col-sm-7">
+          <input type="text" class="form-control" [(ngModel)]="searchPram"  placeholder="Search by Project Name" (input)="Search()">
+      </div>
+      <div class="col-sm-1 text-right">
+          <label>Sort By : </label>
+      </div>
+      <div class="col-sm-1">
+          <button   class="btn btn-link btn-sm " (click)="GetAllProjectsBy('SD')">Start Date</button>
+      </div>
+      <div class="col-sm-1">
+          <button  class="btn btn-link btn-sm " (click)="GetAllProjectsBy('ED')">End Date</button>
+      </div>
+      <div class="col-sm-1">
+          <button    class="btn btn-link btn-sm " (click)="GetAllProjectsBy('PR')">Priority</button>
+      </div>
+      <div class="col-sm-1">
+        <button    class="btn btn-link btn-sm " (click)="GetAllProjectsBy('CM')">Completed</button>
+    </div>
+
+
+    </div>
+    <div class="row p-3" style="border-bottom:1px dotted #999999;">
+      <div class="col-sm-2 h6">
+        Project
+      </div>
+      <div class="col-sm-1 h6">
+          #Tasks
+        </div>
+        <div class="col-sm-1 h6">
+            Completed
+          </div>
+          <div class="col-sm-2 h6">
+              Start Date
+            </div>
+            <div class="col-sm-2 h6">
+                End Date
+              </div>
+              <div class="col-sm-1 h6">
+                 Priority
+                </div>
+                <div class="col-sm-1">
+
+                   </div>
+                   <div class="col-sm-2">
+
+                     </div>
+    </div>
+    <div *ngFor="let proj of projects " class="row p-3" id="projectgrid">
+        <div class="col-sm-2 ">
+            {{proj.ProjectName}}
+        </div>
+        <div class="col-sm-1 ">
+            1
+          </div>
+          <div class="col-sm-1 ">
+              0
+            </div>
+            <div class="col-sm-2">
+                {{proj.StartDate | date : 'yyyy/MM/dd'}}
+              </div>
+              <div class="col-sm-2 ">
+                  {{proj.EndDate | date : 'yyyy/MM/dd'}}
+                </div>
+                <div class="col-sm-1 ">
+                    {{proj.Priority}}
+                  </div>
+                  <div class="col-sm-1">
+                      <input type="button" (click)="EditProject(proj)" class="btn-sm btn-primary" value="Update">
+                     </div>
+                     <div class="col-sm-2">
+                        <input type="button" class="btn-sm btn-primary" value="Suspend">
+                       </div>
+      </div>
+
+
+
+    <div id="myModal" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+
+          <!-- Modal content-->
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal">&times;</button>
+              <h4 class="modal-title">Search Manager</h4>
+            </div>
+
+            <div class="modal-body">
+              <input type="text" class="form-control"  (input)="SearchManager()" [(ngModel)]="searchManagerPram">
+              <button  *ngFor="let user of managers"  data-dismiss="modal" (click)="SelectManager(user.FirstName,user.User_ID)" class="btn btn-link btn-sm ">{{user.FirstName}}</button>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <div *ngIf="response != null"  class="row">
+          <div class="col-sm-6"  [ngClass]="{'showmsg':response!=''}" >
+            {{response}}
+          </div>
+        </div>

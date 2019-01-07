@@ -1,0 +1,138 @@
+
+    <div class="container">
+        <form>
+      <div class="row">
+          <div class="col-sm-2 text-right">
+            First Name :
+          </div>
+          <div class="col-sm-2">
+              <input type="text" class="form-control"  placeholder="Enter First Name" [(ngModel)]="FirstName" [ngModelOptions]="{standalone: true}" required  #fname="ngModel" >
+              <div *ngIf="fname.invalid && (fname.dirty || fname.touched)"
+    class="alert alert-danger">
+
+  <div *ngIf="fname.errors.required">
+    First Name is required.
+  </div>
+
+
+
+</div>
+            </div>
+            <div class="col-sm-2 text-right">
+                Last Name :
+              </div>
+              <div class="col-sm-2">
+                  <input type="text" class="form-control"  placeholder="Enter last Name" [(ngModel)]="LastName" [ngModelOptions]="{standalone: true}"  required  #lname="ngModel">
+                  <div *ngIf="lname.invalid && (lname.dirty || lname.touched)"
+    class="alert alert-danger">
+
+  <div *ngIf="lname.errors.required">
+    Last Name is required.
+  </div>
+
+
+</div>
+                </div>
+                <div class="col-sm-2 text-right">
+                    Employee Id :
+                  </div>
+                  <div class="col-sm-2">
+                      <input type="text" class="form-control"  placeholder="Enter EmpId" [(ngModel)]="EmployeeId" [ngModelOptions]="{standalone: true}" required  #eid="ngModel" >
+                      <div *ngIf="eid.invalid && (eid.dirty || eid.touched)"
+    class="alert alert-danger">
+
+  <div *ngIf="eid.errors.required">
+    Last Name is required.
+  </div>
+
+
+</div>
+                    </div>
+
+      </div>
+      <br>
+      <div class="row" style="border-bottom: 2px dashed #999999; padding:10px;">
+          <div class="col-sm-11 text-right">
+              <button id="AddUser" value="Add" (click)="ManageUser()"  class="btn btn-primary btn-sm" *ngIf="EditingUserId==0" >Add</button>
+              <button id="UpdateUser" value="Update" (click)="ManageUser()"  class="btn btn-primary btn-sm" *ngIf="EditingUserId!=0" >Update</button>
+          </div>
+          <div class="col-sm-1  text-right">
+          <button id="Reset" value="Reset" (click)="clear()"  class="btn btn-primary btn-sm ">Reset</button>
+          </div>
+      </div>
+        </form>
+      <div class="row" style="padding:10px; background-color: #cccccc;border-bottom: 2px dashed #999999;">
+        <div class="col-sm-8">
+            <input type="text" class="form-control" [(ngModel)]="searchPram"  placeholder="Search by First Name" (input)="Search()">
+        </div>
+        <div class="col-sm-1 text-right">
+            <label>Sort By : </label>
+        </div>
+        <div class="col-sm-1">
+            <button id="SortFn" value="First Name" (click)="GetAllUsersBy('FN')" class="btn btn-link btn-sm ">First Name</button>
+        </div>
+        <div class="col-sm-1">
+            <button id="SortLn" value="Last Name"  (click)="GetAllUsersBy('LN')" class="btn btn-link btn-sm ">Last Name</button>
+        </div>
+        <div class="col-sm-1">
+            <button id="SortEid" value="Emp Id"   (click)="GetAllUsersBy('EM')" class="btn btn-link btn-sm ">Emp Id</button>
+        </div>
+
+      </div>
+      <div class="row" id="UserDetails"  style="border-top:1px dotted #999999; padding:10px;">
+          <div class="col-sm-3 h6">
+             First Name
+          </div>
+          <div class="col-sm-3 h6">
+            Last Name
+          </div>
+          <div class="col-sm-3 h6">
+             Employee Id
+          </div>
+          </div>
+
+      <div class="row" id="UserDetails" *ngFor="let user of Users" style="border-top:1px dotted #999999; padding:10px;">
+        <div class="col-sm-3">
+            {{user.FirstName}}
+        </div>
+        <div class="col-sm-3">
+            {{user.LastName}}
+        </div>
+        <div class="col-sm-3">
+            {{user.EmployeeID}}
+        </div>
+        <div class="col-sm-1">
+            <!-- <button type="button" class="btn btn-primary btn-sm  " data-toggle="modal" data-target="#exampleModal" >Edit</button> -->
+
+            <button id="EditUser" (click)="EditUser(user)"  value="Edit" class="btn btn-primary btn-sm ">Edit</button>
+        </div>
+        <div class="col-sm-2">
+            <button id="DeleteUser" (click)="DeleteUser(user.User_ID)" value="Delete" class="btn btn-primary btn-sm ">Delete</button>
+        </div>
+      </div>
+    </div>
+
+    <div *ngIf="response != ''"  class="row">
+        <div class="col-sm-6"  [ngClass]="{'show':response != ''}" >
+          {{response}}
+        </div>
+      </div>
+    <!-- <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">/h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              ...
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+              <button type="button" class="btn btn-primary">Save changes</button>
+            </div>
+          </div>
+        </div>
+      </div> -->

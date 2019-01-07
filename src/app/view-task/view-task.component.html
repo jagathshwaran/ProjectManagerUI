@@ -1,0 +1,96 @@
+
+<form class="form-group" [formGroup]="TaskForm">
+
+<div class="container">
+  <div class="row">
+<div class="col-sm-2 text-right">
+  <label for="taskname">Task :</label>
+</div>
+<div class="col-sm-4 text-left">
+  <input type="text" class="form-control" formControlName="TaskName" >
+</div>
+<div class="col-sm-2 text-right">
+    <label for="parenttaskname">Parent Task Name :</label>
+  </div>
+  <div class="col-sm-4 text-left">
+    <input type="text" class="form-control" formControlName="ParentTaskName" >
+  </div>
+</div>
+<p></p>
+<div class="row">
+<div class="col-sm-2 text-right">
+    <label for="priorityfrom">Priority From :</label>
+</div>
+<div class="col-sm-1 text-left">
+    <input type="text" class="form-control" formControlName="PriorityFrom" id="priorityfrom" >
+  </div>
+
+<div class="col-sm-2 text-right">
+    <label for="priorityto">Priority To :</label>
+</div>
+<div class="col-sm-1 text-left">
+    <input type="text" class="form-control" formControlName="PriorityTo">
+  </div>
+  <div class="col-sm-1 text-right">
+      <label for="startdate">Start Date :</label>
+  </div>
+  <div class="col-sm-2 text-left">
+      <input type="text" class="form-control" formControlName="StartDate" >
+    </div>
+    <div class="col-sm-1 text-right">
+        <label for="enddate">End Date :</label>
+    </div>
+    <div class="col-sm-2 text-left">
+        <input type="text" class="form-control" formControlName="EndDate" >
+      </div>
+  </div>
+  <br>
+  <div class="row">
+    <div class="col-sm-12 text-right">
+      <button id="search" value="End"  data-target="#taskGrid"  (click)="Search()" class="btn btn-primary btn-sm ">Search</button>
+    </div>
+  </div>
+
+    <hr class="new">
+    <div class="row" id="taskGrid" >
+        <div class="col-sm-12" >
+          <div class="row"  *ngFor="let task of tasks" style="padding:5px; border-bottom : 1px dotted #cccccc">
+            <div class="col-sm-2">
+                <label for="tblparenttaskname"><b>Task :</b></label>
+                <label >{{task.TaskName}}</label>
+            </div>
+            <div class="col-sm-2">
+                <label for="tbltaskname"><b>Parent Task :</b></label>
+                <label >{{task.Parent_ID}}</label>
+            </div>
+            <div class="col-sm-2">
+                <label ><b>Priority :</b></label>
+                <label >{{task.Priority}}</label>
+            </div>
+            <div class="col-sm-2">
+                <label ><b>Start :</b></label>
+                <label >{{task.StartDate | date : 'yyyy/MM/dd'}}</label>
+            </div>
+            <div class="col-sm-2">
+                <label ><b>End :</b></label>
+                <label >{{task.EndDate | date : 'yyyy/MM/dd'}}</label>
+            </div>
+            <div class="col-sm-1">
+                <button id="edit" value="Edit" (click)="Edit(task.Task_ID)" class="btn btn-primary btn-sm" >Edit</button>
+            </div>
+            <div class="col-sm-1">
+                <button id="endtask" value="End" (click)="EndTask(task.Task_ID)" class="btn btn-primary btn-sm ">End</button>
+            </div>
+
+          </div>
+        </div>
+    </div>
+    <div *ngIf="response != null"  class="row">
+      <div class="col-sm-6"  [ngClass]="{'show':response.Message!=''}" >
+        {{response.Message}}
+      </div>
+    </div>
+</div>
+
+
+</form>

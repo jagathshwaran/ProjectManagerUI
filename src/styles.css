@@ -1,0 +1,50 @@
+/* You can add global styles to this file, and also import other style files */
+body
+{
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.menuactive
+{
+ color: #000;
+}
+
+nav{
+  font-weight: bold;
+  text-transform: uppercase;
+  background-color:#0999ec;
+  border-bottom: 4px solid #5a5a5a;
+  color: #fff;
+
+}
+
+nav a{
+  text-transform: uppercase;
+  background-color:#0999ec;
+  color: #FFf;
+}
+
+nav a:hover{
+  text-transform: uppercase;
+  background-color:#0999ec;
+  color: #000000;
+}
+
+.container
+{
+margin-top: 20px;
+font-size: 13px;
+}
+
+hr.new
+{
+  border-top: 2px dashed #5a5a5a;
+}
+
+.tablerow
+{
+  background-color: #cccccc;
+}
+labelhead{
+  font-weight:bold;
+}
